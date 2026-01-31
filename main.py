@@ -147,11 +147,9 @@ def main() -> None:
                 else:
                     st.write("Средний разряд (среднее mark): нет данных")
             elif stem == "performance_metrics_apr_dec2025":
-                if {"avg_performance_percent", "avg_complexity"}.issubset(filtered.columns) and not filtered.empty:
-                    value = filtered.iloc[0]
-                    raw_score = float(value["avg_performance_percent"]) * float(value["avg_complexity"])
-                    total_score = min(raw_score, 25)
-                    st.write(f"Итоговый балл: {total_score:.2f} (cap 25)")
+                if "performance_points" in filtered.columns and not filtered.empty:
+                    value = float(filtered.iloc[0]["performance_points"])
+                    st.write(f"Итоговый балл: {value:.2f}")
                 else:
                     st.write("Итоговый балл: нет данных")
             st.dataframe(filtered, use_container_width=True, hide_index=True)
