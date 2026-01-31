@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 
 
-DATA_DIR = Path(__file__).resolve().parent
+DATA_DIR = Path(__file__).resolve().parent / "data"
 LOGIN_USER = st.secrets["auth"]["username"]
 LOGIN_PASS = st.secrets["auth"]["password"]
 
