@@ -47,7 +47,9 @@ def render_selected_card(row: pd.Series) -> None:
 def filtered_table(df: pd.DataFrame, employee_id: int) -> pd.DataFrame:
     if "id_employee" not in df.columns:
         return df.iloc[0:0]
-    filtered = df[df["id_employee"] == employee_id].copy()
+    working = df.copy()
+    working["id_employee"] = pd.to_numeric(working["id_employee"], errors="coerce").astype("Int64")
+    filtered = working[working["id_employee"] == employee_id].copy()
     return filtered
 
 
