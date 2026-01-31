@@ -122,7 +122,13 @@ def main() -> None:
         st.info("Дополнительные CSV файлы не найдены.")
         return
 
-    tabs = st.tabs([path.stem for path in detail_files])
+    tab_labels = {
+        "detail_discipline_apr_dec2025": "Дисциплина",
+        "detail_errors_apr_dec2025": "Ошибки",
+        "detail_ranks_apr_dec2025": "Разряды",
+        "performance_metrics_apr_dec2025": "Показатели",
+    }
+    tabs = st.tabs([tab_labels.get(path.stem, path.stem) for path in detail_files])
     for tab, path in zip(tabs, detail_files):
         with tab:
             df = load_csv(path)
