@@ -153,7 +153,7 @@ def main() -> None:
                             .reset_index()
                             .rename(columns={"index": "Участок", "area": "Кол-во"})
                         )
-            st.dataframe(area_counts, width="stretch", hide_index=True)
+                        st.dataframe(area_counts, width="stretch", hide_index=True)
                     if "product" in filtered.columns:
                         st.markdown("**Ошибки по продуктам**")
                         product_counts = (
@@ -163,7 +163,7 @@ def main() -> None:
                             .reset_index()
                             .rename(columns={"index": "Продукт", "product": "Кол-во"})
                         )
-            st.dataframe(product_counts, width="stretch", hide_index=True)
+                        st.dataframe(product_counts, width="stretch", hide_index=True)
                 st.dataframe(
                     filtered,
                     width="stretch",
