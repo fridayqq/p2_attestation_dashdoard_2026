@@ -142,6 +142,38 @@ def main() -> None:
                 st.write(f"Итого косяков (сумма discipline_points): {total_points}")
             elif stem == "detail_errors_apr_dec2025":
                 st.write(f"Итого ошибок (кол-во записей): {len(filtered)}")
+                if not filtered.empty:
+                    if "area" in filtered.columns:
+                        st.markdown("**Ошибки по участкам**")
+                        area_counts = (
+                            filtered["area"]
+                            .fillna("Не указано")
+                            .value_counts()
+                            .reset_index()
+                            .rename(columns={"index": "Участок", "area": "Кол-во"})
+                        )
+                        st.dataframe(area_counts, use_container_width=True, hide_index=True)
+                    if "product" in filtered.columns:
+                        st.markdown("**Ошибки по продуктам**")
+                        product_counts = (
+                            filtered["product"]
+                            .fillna("Не указано")
+                            .value_counts()
+                            .reset_index()
+                            .rename(columns={"index": "Продукт", "product": "Кол-во"})
+                        )
+                        st.dataframe(product_counts, use_container_width=True, hide_index=True)
+                st.dataframe(
+                    filtered,
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "text_mistake": st.column_config.TextColumn(
+                            "Комментарий",
+                            width="large",
+                        )
+                    },
+                )
             elif stem == "detail_ranks_apr_dec2025":
                 if "mark" in filtered.columns and not filtered["mark"].empty:
                     avg_mark = filtered["mark"].mean()
@@ -154,7 +186,8 @@ def main() -> None:
                     st.write(f"Итоговый балл: {value:.2f}")
                 else:
                     st.write("Итоговый балл: нет данных")
-            st.dataframe(filtered, use_container_width=True, hide_index=True)
+            if stem != "detail_errors_apr_dec2025":
+                st.dataframe(filtered, use_container_width=True, hide_index=True)
 
 
 if __name__ == "__main__":
