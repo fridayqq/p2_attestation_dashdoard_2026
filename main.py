@@ -113,7 +113,8 @@ def main() -> None:
         .reset_index()
         .rename(columns={"index": "Показатель", selected_row.index[0]: "Значение"})
     )
-    st.dataframe(summary_vertical, use_container_width=True, hide_index=True)
+    summary_vertical["Значение"] = summary_vertical["Значение"].astype(str)
+    st.dataframe(summary_vertical, width="stretch", hide_index=True)
 
     st.subheader("Детализация по выбранному сотруднику")
     detail_files = sorted(
@@ -152,7 +153,7 @@ def main() -> None:
                             .reset_index()
                             .rename(columns={"index": "Участок", "area": "Кол-во"})
                         )
-                        st.dataframe(area_counts, use_container_width=True, hide_index=True)
+            st.dataframe(area_counts, width="stretch", hide_index=True)
                     if "product" in filtered.columns:
                         st.markdown("**Ошибки по продуктам**")
                         product_counts = (
@@ -162,15 +163,16 @@ def main() -> None:
                             .reset_index()
                             .rename(columns={"index": "Продукт", "product": "Кол-во"})
                         )
-                        st.dataframe(product_counts, use_container_width=True, hide_index=True)
+            st.dataframe(product_counts, width="stretch", hide_index=True)
                 st.dataframe(
                     filtered,
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                     column_config={
                         "text_mistake": st.column_config.TextColumn(
                             "Комментарий",
                             width="large",
+                            max_chars=None,
                         )
                     },
                 )
@@ -187,7 +189,7 @@ def main() -> None:
                 else:
                     st.write("Итоговый балл: нет данных")
             if stem != "detail_errors_apr_dec2025":
-                st.dataframe(filtered, use_container_width=True, hide_index=True)
+                st.dataframe(filtered, width="stretch", hide_index=True)
 
 
 if __name__ == "__main__":
